@@ -162,6 +162,59 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(typeCommand, 2000);
 });
 
+// Mobile touch enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Improve touch scrolling on iOS
+    document.body.style.webkitOverflowScrolling = 'touch';
+    
+    // Prevent zoom on double-tap for better UX
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
+    // Add visual feedback for touch interactions
+    const interactiveElements = document.querySelectorAll('.tab-btn, .copy-btn, .download-btn, .btn-primary, .btn-secondary');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.opacity = '0.7';
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.opacity = '';
+            }, 150);
+        }, { passive: true });
+    });
+});
+
+// Optimize animations for mobile devices
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Reduce animations on mobile for better performance
+if (isMobileDevice()) {
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.textContent = `
+            * {
+                animation-duration: 0.3s !important;
+                transition-duration: 0.3s !important;
+            }
+            .logo-icon {
+                animation: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+}
+
 // Add keyboard shortcuts easter egg
 document.addEventListener('keydown', function(e) {
     // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A

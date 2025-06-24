@@ -462,8 +462,28 @@ body {
     51%, 100% { opacity: 0; }
 }
 
-/* Responsive */
+/* Mobile Optimizations */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero .container {
+        gap: 50px;
+    }
+    
+    .terminal-window {
+        max-width: 400px;
+    }
+}
+
+/* Tablet Responsive */
 @media (max-width: 768px) {
+    .hero {
+        padding: 60px 0;
+        min-height: auto;
+    }
+    
     .hero .container {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -474,19 +494,337 @@ body {
         font-size: 2.5rem;
     }
     
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        max-width: none;
+    }
+    
     .section-title {
         font-size: 2rem;
+        margin-bottom: 40px;
+    }
+    
+    .features, .usage, .languages {
+        padding: 60px 0;
+    }
+    
+    .install-section {
+        padding: 25px;
     }
     
     .install-tabs {
         flex-direction: column;
+        gap: 8px;
+    }
+    
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .code-block pre {
+        padding: 15px;
+        font-size: 0.8rem;
     }
     
     .usage-grid {
         grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .features-grid, .languages-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    
+    .feature-card, .language-card {
+        padding: 25px;
+    }
+    
+    .feature-icon, .language-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .footer-content {
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .terminal-window {
+        max-width: 100%;
+    }
+    
+    .terminal-body {
+        padding: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile Phone Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .hero {
+        padding: 40px 0;
+    }
+    
+    .logo {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .logo-icon {
+        font-size: 3rem;
+    }
+    
+    .logo-text {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .hero-description {
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
+    
+    .install-section {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .install-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .tab-btn {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+    
+    .code-block pre {
+        padding: 12px;
+        font-size: 0.75rem;
+        overflow-x: auto;
+    }
+    
+    .copy-btn {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+    
+    .download-btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .features, .usage, .languages {
+        padding: 40px 0;
     }
     
     .features-grid, .languages-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .feature-card, .language-card {
+        padding: 20px;
+    }
+    
+    .feature-card h3, .language-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .feature-card p, .language-card p {
+        font-size: 0.9rem;
+    }
+    
+    .usage-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    
+    .command-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px;
+    }
+    
+    .command-item code {
+        font-size: 0.8rem;
+        word-break: break-all;
+    }
+    
+    .command-item span {
+        margin-left: 0;
+        font-size: 0.85rem;
+    }
+    
+    .footer {
+        padding: 40px 0 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .footer-section h3 {
+        margin-bottom: 15px;
+    }
+    
+    .footer-bottom {
+        font-size: 0.9rem;
+        padding-top: 20px;
+    }
+    
+    .terminal-window {
+        border-radius: 10px;
+    }
+    
+    .terminal-header {
+        padding: 12px;
+    }
+    
+    .terminal-title {
+        font-size: 0.9rem;
+    }
+    
+    .terminal-body {
+        padding: 12px;
+        font-size: 0.75rem;
+    }
+    
+    .file-line {
+        padding: 2px 0;
+        word-break: break-all;
+    }
+    
+    .btn {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Extra Small Screens */
+@media (max-width: 320px) {
+    .logo-text {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .install-section {
+        padding: 15px;
+    }
+    
+    .feature-card, .language-card {
+        padding: 15px;
+    }
+    
+    .code-block pre {
+        font-size: 0.7rem;
+        padding: 10px;
+    }
+    
+    .terminal-body {
+        font-size: 0.7rem;
+        padding: 10px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .feature-card:hover, .language-card:hover {
+        transform: none;
+        box-shadow: var(--shadow);
+    }
+    
+    .command-item:hover {
+        transform: none;
+    }
+    
+    .tab-btn:hover {
+        transform: none;
+    }
+    
+    .download-btn:hover {
+        transform: none;
+    }
+    
+    .copy-btn:hover {
+        transform: none;
+    }
+    
+    /* Make tap targets larger for touch */
+    .tab-btn {
+        min-height: 44px;
+    }
+    
+    .copy-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .download-btn {
+        min-height: 48px;
+    }
+}
+
+/* Landscape Phone Optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 30px 0;
+        min-height: auto;
+    }
+    
+    .features, .usage, .languages {
+        padding: 30px 0;
+    }
+    
+    .features-grid, .languages-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* High DPI Display Optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .feature-icon, .language-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }

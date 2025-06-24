@@ -110,6 +110,9 @@ body {
     padding: 30px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .install-section h3 {
@@ -158,12 +161,16 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 10px;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .code-block pre {
     padding: 20px;
     margin: 0;
     overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .code-block code {
@@ -529,6 +536,9 @@ body {
     .code-block pre {
         padding: 15px;
         font-size: 0.8rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
     }
     
     .usage-grid {
@@ -614,10 +624,18 @@ body {
         font-size: 0.8rem;
     }
     
+    .code-block {
+        overflow: hidden;
+        max-width: 100%;
+    }
+    
     .code-block pre {
         padding: 12px;
         font-size: 0.75rem;
         overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .copy-btn {
@@ -754,6 +772,10 @@ body {
     .code-block pre {
         font-size: 0.7rem;
         padding: 10px;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .terminal-body {

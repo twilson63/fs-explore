@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fs-explore - TUI File Explorer with Style!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="logo">
+                    <span class="logo-icon">📁</span>
+                    <h1 class="logo-text">fs-explore</h1>
+                </div>
+                <p class="hero-subtitle">The coolest TUI file explorer in the galaxy!</p>
+                <p class="hero-description">
+                    Navigate files with style, syntax highlighting, and vim-inspired shortcuts. 
+                    Built with Lua and the Hype framework for maximum awesomeness! 🚀
+                </p>
+                
+                <div class="install-section">
+                    <h3>🚀 Quick Install</h3>
+                    <div class="install-tabs">
+                        <button class="tab-btn active" onclick="showTab('unix')">Linux/macOS</button>
+                        <button class="tab-btn" onclick="showTab('windows')">Windows</button>
+                        <button class="tab-btn" onclick="showTab('manual')">Manual</button>
+                    </div>
+                    
+                    <div id="unix-tab" class="tab-content active">
+                        <div class="code-block">
+                            <pre><code>curl -fsSL https://raw.githubusercontent.com/twilson63/fs-explore/main/install.sh | bash</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard('curl -fsSL https://raw.githubusercontent.com/twilson63/fs-explore/main/install.sh | bash')">📋</button>
+                        </div>
+                    </div>
+                    
+                    <div id="windows-tab" class="tab-content">
+                        <div class="code-block">
+                            <pre><code>irm https://raw.githubusercontent.com/twilson63/fs-explore/main/install.ps1 | iex</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard('irm https://raw.githubusercontent.com/twilson63/fs-explore/main/install.ps1 | iex')">📋</button>
+                        </div>
+                    </div>
+                    
+                    <div id="manual-tab" class="tab-content">
+                        <div class="manual-install">
+                            <p>Download from GitHub Releases:</p>
+                            <a href="https://github.com/twilson63/fs-explore/releases" class="download-btn">
+                                📦 Download Latest Release
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-demo">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="btn red"></span>
+                            <span class="btn yellow"></span>
+                            <span class="btn green"></span>
+                        </div>
+                        <div class="terminal-title">fs-explore</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="demo-content">
+                            <div class="file-listing">
+                                <div class="file-header">Directory: /home/dev/projects</div>
+                                <div class="file-line">📁 awesome-project</div>
+                                <div class="file-line">📁 fs-explore</div>
+                                <div class="file-line">🌙 main.lua</div>
+                                <div class="file-line">📜 package.json</div>
+                                <div class="file-line">📝 README.md</div>
+                                <div class="file-line">📄 config.yaml</div>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">Path: </span>
+                                <span class="cursor">_</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">✨ Awesome Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Syntax Highlighting</h3>
+                    <p>Beautiful colors for Lua, JavaScript, TypeScript, C, Erlang, and Markdown files!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⌨️</div>
+                    <h3>Vim-Inspired Navigation</h3>
+                    <p>Escape to scroll, Ctrl+L to focus. Navigate like a pro with keyboard shortcuts!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Works on Linux, macOS, and Windows. One explorer to rule them all!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Smart File Detection</h3>
+                    <p>Automatically detects binary files and displays appropriate icons for each file type.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Built with Lua and Hype framework for maximum performance and minimal resource usage.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Command Interface</h3>
+                    <p>Powerful commands: navigate directories, open files, go home, or quit with simple commands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Section -->
+    <section class="usage">
+        <div class="container">
+            <h2 class="section-title">🎮 How to Use</h2>
+            <div class="usage-grid">
+                <div class="usage-section">
+                    <h3>📂 Navigation Commands</h3>
+                    <div class="command-list">
+                        <div class="command-item">
+                            <code>/path/to/directory</code>
+                            <span>Navigate to directory</span>
+                        </div>
+                        <div class="command-item">
+                            <code>home</code>
+                            <span>Go to home directory</span>
+                        </div>
+                        <div class="command-item">
+                            <code>../</code>
+                            <span>Go to parent directory</span>
+                        </div>
+                        <div class="command-item">
+                            <code>quit</code>
+                            <span>Exit the application</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="usage-section">
+                    <h3>📄 File Operations</h3>
+                    <div class="command-list">
+                        <div class="command-item">
+                            <code>open filename.lua</code>
+                            <span>View file with syntax highlighting</span>
+                        </div>
+                        <div class="command-item">
+                            <code>open README.md</code>
+                            <span>View markdown with formatting</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="usage-section">
+                    <h3>⌨️ Keyboard Shortcuts</h3>
+                    <div class="command-list">
+                        <div class="command-item">
+                            <code>Escape</code>
+                            <span>Focus file view for scrolling</span>
+                        </div>
+                        <div class="command-item">
+                            <code>Ctrl+L</code>
+                            <span>Focus path input</span>
+                        </div>
+                        <div class="command-item">
+                            <code>↑ ↓</code>
+                            <span>Scroll through files</span>
+                        </div>
+                        <div class="command-item">
+                            <code>Page Up/Down</code>
+                            <span>Fast scrolling</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Languages Section -->
+    <section class="languages">
+        <div class="container">
+            <h2 class="section-title">🌈 Supported Languages</h2>
+            <div class="languages-grid">
+                <div class="language-card">
+                    <div class="language-icon">🌙</div>
+                    <h3>Lua</h3>
+                    <p>Keywords, functions, strings with beautiful highlighting</p>
+                </div>
+                <div class="language-card">
+                    <div class="language-icon">📝</div>
+                    <h3>Markdown</h3>
+                    <p>Headers, links, code blocks, and formatting</p>
+                </div>
+                <div class="language-card">
+                    <div class="language-icon">⚡</div>
+                    <h3>Erlang</h3>
+                    <p>Atoms, variables, macros, and pattern matching</p>
+                </div>
+                <div class="language-card">
+                    <div class="language-icon">⚙️</div>
+                    <h3>C</h3>
+                    <p>Preprocessor directives and stdlib functions</p>
+                </div>
+                <div class="language-card">
+                    <div class="language-icon">📜</div>
+                    <h3>JavaScript</h3>
+                    <p>ES6+, template literals, and modern syntax</p>
+                </div>
+                <div class="language-card">
+                    <div class="language-icon">🔷</div>
+                    <h3>TypeScript</h3>
+                    <p>Types, interfaces, decorators, and more</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🚀 fs-explore</h3>
+                    <p>The most fun way to explore files in your terminal!</p>
+                </div>
+                <div class="footer-section">
+                    <h3>🔗 Links</h3>
+                    <ul>
+                        <li><a href="https://github.com/twilson63/fs-explore">GitHub</a></li>
+                        <li><a href="https://github.com/twilson63/fs-explore/releases">Releases</a></li>
+                        <li><a href="https://github.com/twilson63/fs-explore/issues">Issues</a></li>
+                        <li><a href="https://github.com/twilson63/hype">Hype Framework</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>📄 License</h3>
+                    <p>MIT License - Built with ❤️ and lots of ☕</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 fs-explore contributors. Made with 🤖 and Claude Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

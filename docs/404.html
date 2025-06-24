@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - File Not Found | fs-explore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+    <div class="error-page">
+        <div class="container">
+            <div class="error-content">
+                <div class="error-icon">🤖💔</div>
+                <h1 class="error-title">404</h1>
+                <h2 class="error-subtitle">File Not Found</h2>
+                <p class="error-description">
+                    Oops! Looks like this file doesn't exist in our directory tree. 
+                    Even our advanced TUI explorer couldn't locate it! 
+                </p>
+                
+                <div class="terminal-error">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="btn red"></span>
+                            <span class="btn yellow"></span>
+                            <span class="btn green"></span>
+                        </div>
+                        <div class="terminal-title">fs-explore</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="error-output">
+                            <div class="error-line">
+                                <span class="prompt">Path: </span>
+                                <span class="error-path">/404/not-found</span>
+                            </div>
+                            <div class="error-message">
+                                ❌ Error: Path not found or access denied
+                            </div>
+                            <div class="suggestion">
+                                💡 Try navigating back to a valid directory:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="error-actions">
+                    <a href="/" class="btn-primary">🏠 Go Home</a>
+                    <a href="https://github.com/twilson63/fs-explore" class="btn-secondary">📦 GitHub Repo</a>
+                </div>
+                
+                <div class="fun-fact">
+                    <p>🤔 Fun fact: In a real file system, this would be like trying to <code>cd</code> into a directory that doesn't exist!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+        }
+
+        .error-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .error-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px #ef4444;
+        }
+
+        .error-subtitle {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--primary-teal);
+            margin-bottom: 20px;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .terminal-error {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-output {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .error-line {
+            margin-bottom: 10px;
+        }
+
+        .prompt {
+            color: var(--accent-teal);
+        }
+
+        .error-path {
+            color: #ef4444;
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+
+        .suggestion {
+            color: var(--primary-teal);
+            margin-bottom: 10px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-teal), var(--accent-teal));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 30px -5px rgba(20, 184, 166, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-teal);
+            transform: translateY(-3px);
+        }
+
+        .fun-fact {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .fun-fact p {
+            margin: 0;
+            color: var(--text-gray);
+        }
+
+        .fun-fact code {
+            background: var(--bg-darker);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--light-teal);
+            font-family: 'Space Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 4rem;
+            }
+            
+            .error-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</body>
+</html>

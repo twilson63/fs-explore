@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, false);
     
     // Add visual feedback for touch interactions
-    const interactiveElements = document.querySelectorAll('.tab-btn, .copy-btn, .download-btn, .btn-primary, .btn-secondary');
+    const interactiveElements = document.querySelectorAll('.tab-btn, .copy-btn, .download-btn, .mobile-download-btn, .btn-primary, .btn-secondary');
     
     interactiveElements.forEach(element => {
         element.addEventListener('touchstart', function() {

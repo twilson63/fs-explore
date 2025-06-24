@@ -220,6 +220,57 @@ body {
     box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.6);
 }
 
+/* Mobile Install Section - Hidden by default */
+.mobile-install {
+    display: none;
+    background: var(--bg-card);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.mobile-install h3 {
+    font-family: 'Orbitron', monospace;
+    color: var(--primary-teal);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.mobile-install p {
+    color: var(--text-gray);
+    margin-bottom: 20px;
+}
+
+.mobile-download-btn {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary-teal), var(--accent-teal));
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    font-size: 1rem;
+}
+
+.mobile-download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 25px 30px -5px rgba(20, 184, 166, 0.4);
+}
+
+.mobile-note {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
 /* Terminal Demo */
 .hero-demo {
     display: flex;
@@ -581,6 +632,30 @@ body {
         padding: 0 10px;
     }
     
+    /* Hide quick install on mobile - too complex for small screens */
+    .install-section {
+        display: none;
+    }
+    
+    /* Show simplified mobile install section */
+    .mobile-install {
+        display: block;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .mobile-install h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .mobile-download-btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 280px;
+    }
+    
     .hero {
         padding: 40px 0;
     }
@@ -765,6 +840,15 @@ body {
         padding: 15px;
     }
     
+    .mobile-install {
+        padding: 15px;
+    }
+    
+    .mobile-download-btn {
+        font-size: 0.85rem;
+        padding: 10px 20px;
+    }
+    
     .feature-card, .language-card {
         padding: 15px;
     }
@@ -803,6 +887,10 @@ body {
         transform: none;
     }
     
+    .mobile-download-btn:hover {
+        transform: none;
+    }
+    
     .copy-btn:hover {
         transform: none;
     }
@@ -818,6 +906,10 @@ body {
     }
     
     .download-btn {
+        min-height: 48px;
+    }
+    
+    .mobile-download-btn {
         min-height: 48px;
     }
 }

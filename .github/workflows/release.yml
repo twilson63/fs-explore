@@ -1,0 +1,158 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Lua
+      uses: leafo/gh-actions-lua@v10
+      with:
+        luaVersion: "5.1"
+        
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y zip
+        
+    - name: Set version
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Create release binaries
+      run: |
+        ./build.sh ${{ steps.version.outputs.VERSION }}
+        
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.version.outputs.VERSION }}
+        release_name: fs-explore ${{ steps.version.outputs.VERSION }}
+        body: |
+          ## fs-explore ${{ steps.version.outputs.VERSION }}
+          
+          Cross-platform TUI file explorer with syntax highlighting.
+          
+          ### Installation
+          
+          **Quick install (Linux/macOS):**
+          ```bash
+          curl -fsSL https://raw.githubusercontent.com/twilson63/fs-explore/main/install.sh | bash
+          ```
+          
+          **Windows (PowerShell):**
+          ```powershell
+          irm https://raw.githubusercontent.com/twilson63/fs-explore/main/install.ps1 | iex
+          ```
+          
+          **Manual install:**
+          Download the appropriate binary for your platform below.
+          
+          ### Features
+          - 📁 Cross-platform file navigation
+          - 🎨 Syntax highlighting for 6+ languages
+          - ⌨️ Vim-inspired keyboard shortcuts
+          - 🔍 Binary file detection
+          
+          ### Supported Platforms
+          - Linux (x86_64, ARM64)
+          - macOS (Intel, Apple Silicon)
+          - Windows (x86_64, ARM64)
+          
+          ### Checksums
+          See `checksums.txt` for file verification.
+        draft: false
+        prerelease: false
+        
+    - name: Upload Linux AMD64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-linux-amd64.tar.gz
+        asset_name: fs-explore-linux-amd64.tar.gz
+        asset_content_type: application/gzip
+        
+    - name: Upload Linux ARM64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-linux-arm64.tar.gz
+        asset_name: fs-explore-linux-arm64.tar.gz
+        asset_content_type: application/gzip
+        
+    - name: Upload macOS AMD64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-darwin-amd64.tar.gz
+        asset_name: fs-explore-darwin-amd64.tar.gz
+        asset_content_type: application/gzip
+        
+    - name: Upload macOS ARM64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-darwin-arm64.tar.gz
+        asset_name: fs-explore-darwin-arm64.tar.gz
+        asset_content_type: application/gzip
+        
+    - name: Upload Windows AMD64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-windows-amd64.zip
+        asset_name: fs-explore-windows-amd64.zip
+        asset_content_type: application/zip
+        
+    - name: Upload Windows ARM64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/fs-explore-windows-arm64.zip
+        asset_name: fs-explore-windows-arm64.zip
+        asset_content_type: application/zip
+        
+    - name: Upload checksums
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/checksums.txt
+        asset_name: checksums.txt
+        asset_content_type: text/plain

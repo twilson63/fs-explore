@@ -24,10 +24,31 @@ A cross-platform TUI (Text User Interface) file explorer built with Lua and the 
 
 ## Installation
 
+### Quick Install
+
+**Linux/macOS:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/twilson63/fs-explore/main/install.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/twilson63/fs-explore/main/install.ps1 | iex
+```
+
+### Manual Installation
+
+1. Download the latest binary for your platform from [Releases](https://github.com/twilson63/fs-explore/releases)
+2. Extract the archive
+3. Move the binary to a directory in your PATH
+4. Run `fs-explore`
+
+### Development Installation
+
 1. Install [Hype](https://github.com/twilson63/hype) framework
 2. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/fs-explore.git
+   git clone https://github.com/twilson63/fs-explore.git
    cd fs-explore
    ```
 3. Run the file explorer:

@@ -40,18 +40,8 @@ jobs:
         
     - name: Install Hype framework
       run: |
-        HYPE_VERSION="v1.4.2"
-        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-          HYPE_PLATFORM="linux"
-        else
-          HYPE_PLATFORM="darwin"
-        fi
-        
-        # Download the latest Hype release
-        curl -L "https://github.com/twilson63/hype/releases/download/${HYPE_VERSION}/hype-${HYPE_VERSION}-${HYPE_PLATFORM}-amd64.tar.gz" -o /tmp/hype.tar.gz
-        tar -xzf /tmp/hype.tar.gz -C /tmp/
-        sudo cp /tmp/${HYPE_PLATFORM}-amd64/hype /usr/local/bin/hype
-        sudo chmod +x /usr/local/bin/hype
+        # Use official installer with specific version
+        curl -sSL https://raw.githubusercontent.com/twilson63/hype/main/install.sh | HYPE_VERSION=v1.4.2 bash
         
         # Verify installation
         hype --version

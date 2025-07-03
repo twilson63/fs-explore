@@ -141,6 +141,7 @@ jobs:
         mkdir -p dist/
         cp artifacts/binaries-ubuntu-latest/* dist/ 2>/dev/null || true
         cp artifacts/binaries-macos-latest/* dist/ 2>/dev/null || true
+        cp artifacts/binaries-macos-14/* dist/ 2>/dev/null || true
         ls -la dist/
         
     - name: Create Release

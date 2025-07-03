@@ -40,10 +40,23 @@ jobs:
         
     - name: Install Hype framework
       run: |
-        # Use official installer (installs v1.4.2 by default)
-        curl -sSL https://raw.githubusercontent.com/twilson63/hype/main/install.sh | bash
+        # Manual installation with better error handling
+        VERSION="v1.4.2"
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          PLATFORM="linux"
+        else
+          PLATFORM="darwin"
+        fi
+        
+        echo "Downloading Hype $VERSION for $PLATFORM..."
+        cd /tmp
+        curl -LO "https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        tar -xzf "hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        sudo cp "$PLATFORM-amd64/hype" /usr/local/bin/hype
+        sudo chmod +x /usr/local/bin/hype
         
         # Verify installation
+        echo "Verifying Hype installation..."
         hype --version
         
     - name: Install dependencies

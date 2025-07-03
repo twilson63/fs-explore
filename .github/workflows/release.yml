@@ -23,10 +23,15 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y zip
           - os: macos-latest
-            platforms: "darwin-amd64,darwin-arm64"
+            platforms: "darwin-amd64"
             install_deps: |
-              # macOS already has zip and tar
-              echo "macOS dependencies ready"
+              # macOS Intel dependencies ready
+              echo "macOS Intel dependencies ready"
+          - os: macos-14
+            platforms: "darwin-arm64"
+            install_deps: |
+              # macOS Apple Silicon dependencies ready
+              echo "macOS Apple Silicon dependencies ready"
     runs-on: ${{ matrix.os }}
     
     steps:
@@ -48,22 +53,29 @@ jobs:
           PLATFORM="darwin"
         fi
         
+        # Determine architecture based on runner
+        if [[ "${{ matrix.os }}" == "macos-14" ]]; then
+          ARCH="arm64"
+        else
+          ARCH="amd64"
+        fi
+        
         echo "Installing Hype $VERSION for $PLATFORM..."
         echo "Working directory: $(pwd)"
         echo "User: $(whoami)"
         echo "PATH: $PATH"
         
         cd /tmp
-        echo "Downloading from: https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-amd64.tar.gz"
-        curl -LO "https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        echo "Downloading from: https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-$ARCH.tar.gz"
+        curl -LO "https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-$ARCH.tar.gz"
         
         echo "Archive downloaded, extracting..."
-        tar -xzf "hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        tar -xzf "hype-$VERSION-$PLATFORM-$ARCH.tar.gz"
         echo "Contents of /tmp after extraction:"
         ls -la /tmp/
         
         echo "Installing binary to /usr/local/bin..."
-        sudo cp "$PLATFORM-amd64/hype" /usr/local/bin/hype
+        sudo cp "$PLATFORM-$ARCH/hype" /usr/local/bin/hype
         sudo chmod +x /usr/local/bin/hype
         
         echo "Checking if hype is in PATH..."

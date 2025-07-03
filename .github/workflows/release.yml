@@ -40,16 +40,21 @@ jobs:
         
     - name: Install Hype framework
       run: |
-        git clone https://github.com/twilson63/hype.git /tmp/hype
-        cd /tmp/hype
-        go build -o hype
+        HYPE_VERSION="v1.4.1"
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-          sudo cp hype /usr/local/bin/hype
-          sudo chmod +x /usr/local/bin/hype
+          HYPE_PLATFORM="linux"
         else
-          sudo cp hype /usr/local/bin/hype
-          sudo chmod +x /usr/local/bin/hype
+          HYPE_PLATFORM="darwin"
         fi
+        
+        # Download the latest Hype release
+        curl -L "https://github.com/twilson63/hype/releases/download/${HYPE_VERSION}/hype-${HYPE_PLATFORM}-amd64.tar.gz" -o /tmp/hype.tar.gz
+        tar -xzf /tmp/hype.tar.gz -C /tmp/
+        sudo cp /tmp/hype /usr/local/bin/hype
+        sudo chmod +x /usr/local/bin/hype
+        
+        # Verify installation
+        hype --version
         
     - name: Install dependencies
       run: ${{ matrix.install_deps }}

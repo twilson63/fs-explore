@@ -15,6 +15,8 @@ jobs:
   build:
     name: Build and Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout code
@@ -71,10 +73,8 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/twilson63/fs-explore/main/install.sh | bash
           ```
           
-          **Windows (PowerShell):**
-          ```powershell
-          irm https://raw.githubusercontent.com/twilson63/fs-explore/main/install.ps1 | iex
-          ```
+          **Windows:**
+          🚧 Windows support coming soon! Use WSL with the Linux method above.
           
           **Manual install:**
           Download the appropriate binary for your platform below.
@@ -88,7 +88,7 @@ jobs:
           ### Supported Platforms
           - Linux (x86_64, ARM64)
           - macOS (Intel, Apple Silicon)
-          - Windows (x86_64, ARM64)
+          - Windows (coming soon!)
           
           ### Checksums
           See `checksums.txt` for file verification.

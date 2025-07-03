@@ -40,8 +40,8 @@ jobs:
         
     - name: Install Hype framework
       run: |
-        # Use official installer with specific version
-        curl -sSL https://raw.githubusercontent.com/twilson63/hype/main/install.sh | HYPE_VERSION=v1.4.2 bash
+        # Use official installer (installs v1.4.2 by default)
+        curl -sSL https://raw.githubusercontent.com/twilson63/hype/main/install.sh | bash
         
         # Verify installation
         hype --version

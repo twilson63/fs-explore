@@ -48,16 +48,33 @@ jobs:
           PLATFORM="darwin"
         fi
         
-        echo "Downloading Hype $VERSION for $PLATFORM..."
+        echo "Installing Hype $VERSION for $PLATFORM..."
+        echo "Working directory: $(pwd)"
+        echo "User: $(whoami)"
+        echo "PATH: $PATH"
+        
         cd /tmp
+        echo "Downloading from: https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-amd64.tar.gz"
         curl -LO "https://github.com/twilson63/hype/releases/download/$VERSION/hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        
+        echo "Archive downloaded, extracting..."
         tar -xzf "hype-$VERSION-$PLATFORM-amd64.tar.gz"
+        echo "Contents of /tmp after extraction:"
+        ls -la /tmp/
+        
+        echo "Installing binary to /usr/local/bin..."
         sudo cp "$PLATFORM-amd64/hype" /usr/local/bin/hype
         sudo chmod +x /usr/local/bin/hype
         
+        echo "Checking if hype is in PATH..."
+        which hype || echo "hype not found in PATH"
+        echo "/usr/local/bin contents:"
+        ls -la /usr/local/bin/hype || echo "hype not in /usr/local/bin"
+        
         # Verify installation
         echo "Verifying Hype installation..."
-        hype --version
+        /usr/local/bin/hype --version || echo "Direct path failed"
+        hype --version || echo "PATH lookup failed"
         
     - name: Install dependencies
       run: ${{ matrix.install_deps }}

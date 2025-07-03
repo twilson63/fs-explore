@@ -99,7 +99,5 @@ jobs:
           dist/fs-explore-linux-arm64.tar.gz
           dist/fs-explore-darwin-amd64.tar.gz
           dist/fs-explore-darwin-arm64.tar.gz
-          dist/fs-explore-windows-amd64.zip
-          dist/fs-explore-windows-arm64.zip
           dist/checksums.txt
           dist/README.txt

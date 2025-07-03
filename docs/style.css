@@ -155,6 +155,41 @@ body {
     display: block;
 }
 
+.coming-soon {
+    background: var(--bg-card);
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    color: var(--text-gray);
+}
+
+.coming-soon-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.coming-soon h4 {
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.coming-soon p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.coming-soon a {
+    color: var(--primary-teal);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.coming-soon a:hover {
+    color: var(--accent-teal);
+}
+
 .code-block {
     position: relative;
     background: var(--bg-darker);

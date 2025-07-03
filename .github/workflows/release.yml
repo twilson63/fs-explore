@@ -20,10 +20,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Set up Lua
-      uses: leafo/gh-actions-lua@v10
+    - name: Set up Go
+      uses: actions/setup-go@v5
       with:
-        luaVersion: "5.1"
+        go-version: '1.21'
+        
+    - name: Install Hype framework
+      run: |
+        go install github.com/twilson63/hype@latest
         
     - name: Install dependencies
       run: |
@@ -39,18 +43,18 @@ jobs:
           echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         fi
         
+    - name: Make build script executable
+      run: chmod +x build-release.sh
+        
     - name: Create release binaries
       run: |
-        ./build.sh ${{ steps.version.outputs.VERSION }}
+        ./build-release.sh ${{ steps.version.outputs.VERSION }}
         
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.version.outputs.VERSION }}
-        release_name: fs-explore ${{ steps.version.outputs.VERSION }}
+        name: fs-explore ${{ steps.version.outputs.VERSION }}
         body: |
           ## fs-explore ${{ steps.version.outputs.VERSION }}
           
@@ -86,73 +90,12 @@ jobs:
           See `checksums.txt` for file verification.
         draft: false
         prerelease: false
-        
-    - name: Upload Linux AMD64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-linux-amd64.tar.gz
-        asset_name: fs-explore-linux-amd64.tar.gz
-        asset_content_type: application/gzip
-        
-    - name: Upload Linux ARM64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-linux-arm64.tar.gz
-        asset_name: fs-explore-linux-arm64.tar.gz
-        asset_content_type: application/gzip
-        
-    - name: Upload macOS AMD64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-darwin-amd64.tar.gz
-        asset_name: fs-explore-darwin-amd64.tar.gz
-        asset_content_type: application/gzip
-        
-    - name: Upload macOS ARM64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-darwin-arm64.tar.gz
-        asset_name: fs-explore-darwin-arm64.tar.gz
-        asset_content_type: application/gzip
-        
-    - name: Upload Windows AMD64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-windows-amd64.zip
-        asset_name: fs-explore-windows-amd64.zip
-        asset_content_type: application/zip
-        
-    - name: Upload Windows ARM64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/fs-explore-windows-arm64.zip
-        asset_name: fs-explore-windows-arm64.zip
-        asset_content_type: application/zip
-        
-    - name: Upload checksums
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/checksums.txt
-        asset_name: checksums.txt
-        asset_content_type: text/plain
+        files: |
+          dist/fs-explore-linux-amd64.tar.gz
+          dist/fs-explore-linux-arm64.tar.gz
+          dist/fs-explore-darwin-amd64.tar.gz
+          dist/fs-explore-darwin-arm64.tar.gz
+          dist/fs-explore-windows-amd64.zip
+          dist/fs-explore-windows-arm64.zip
+          dist/checksums.txt
+          dist/README.txt

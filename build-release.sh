@@ -114,14 +114,20 @@ build_platform() {
 
 # Build for all platforms
 build_all() {
-    print_status "Building fs-explore $VERSION for all platforms..."
+    local platform_list="$1"
     
-    local platforms=(
-        "linux-amd64"
-        "linux-arm64"
-        "darwin-amd64" 
-        "darwin-arm64"
-    )
+    if [[ -n "$platform_list" ]]; then
+        print_status "Building fs-explore $VERSION for platforms: $platform_list"
+        IFS=',' read -ra platforms <<< "$platform_list"
+    else
+        print_status "Building fs-explore $VERSION for all platforms..."
+        local platforms=(
+            "linux-amd64"
+            "linux-arm64"
+            "darwin-amd64"
+            "darwin-arm64"
+        )
+    fi
     
     for platform in "${platforms[@]}"; do
         build_platform "$platform"
@@ -166,11 +172,12 @@ EOF
 
 # Main build process
 main() {
+    local platforms="$2"
     print_status "Building fs-explore $VERSION"
     
     check_hype
     clean
-    build_all
+    build_all "$platforms"
     generate_checksums
     create_release_readme
     

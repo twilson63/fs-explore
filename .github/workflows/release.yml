@@ -13,10 +13,21 @@ on:
 
 jobs:
   build:
-    name: Build and Release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    name: Build Binaries
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platforms: "linux-amd64,linux-arm64"
+            install_deps: |
+              sudo apt-get update
+              sudo apt-get install -y zip
+          - os: macos-latest
+            platforms: "darwin-amd64,darwin-arm64"
+            install_deps: |
+              # macOS already has zip and tar
+              echo "macOS dependencies ready"
+    runs-on: ${{ matrix.os }}
     
     steps:
     - name: Checkout code
@@ -32,13 +43,16 @@ jobs:
         git clone https://github.com/twilson63/hype.git /tmp/hype
         cd /tmp/hype
         go build -o hype
-        sudo cp hype /usr/local/bin/hype
-        sudo chmod +x /usr/local/bin/hype
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          sudo cp hype /usr/local/bin/hype
+          sudo chmod +x /usr/local/bin/hype
+        else
+          sudo cp hype /usr/local/bin/hype
+          sudo chmod +x /usr/local/bin/hype
+        fi
         
     - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y zip
+      run: ${{ matrix.install_deps }}
         
     - name: Set version
       id: version
@@ -54,7 +68,43 @@ jobs:
         
     - name: Create release binaries
       run: |
-        ./build-release.sh ${{ steps.version.outputs.VERSION }}
+        ./build-release.sh ${{ steps.version.outputs.VERSION }} ${{ matrix.platforms }}
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: binaries-${{ matrix.os }}
+        path: dist/
+        retention-days: 1
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Set version
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts/
+        
+    - name: Prepare release assets
+      run: |
+        mkdir -p dist/
+        cp artifacts/binaries-ubuntu-latest/* dist/ 2>/dev/null || true
+        cp artifacts/binaries-macos-latest/* dist/ 2>/dev/null || true
+        ls -la dist/
         
     - name: Create Release
       uses: softprops/action-gh-release@v2
@@ -94,10 +144,4 @@ jobs:
           See `checksums.txt` for file verification.
         draft: false
         prerelease: false
-        files: |
-          dist/fs-explore-linux-amd64.tar.gz
-          dist/fs-explore-linux-arm64.tar.gz
-          dist/fs-explore-darwin-amd64.tar.gz
-          dist/fs-explore-darwin-arm64.tar.gz
-          dist/checksums.txt
-          dist/README.txt
+        files: dist/*

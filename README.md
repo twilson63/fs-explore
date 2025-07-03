@@ -14,7 +14,7 @@ A cross-platform TUI (Text User Interface) file explorer built with Lua and the 
 
 - 📁 **Smart Directory Navigation** - Browse directories with keyboard shortcuts and intuitive commands
 - 🎨 **Beautiful Syntax Highlighting** - Support for 6+ programming languages with custom color schemes  
-- 🖥️ **Cross-Platform Magic** - Works seamlessly on macOS and Linux (Windows coming soon!)
+- 🖥️ **Cross-Platform Magic** - Works seamlessly on Linux and macOS (Intel & Apple Silicon), Windows coming soon!
 - ⌨️ **Vim-Inspired Navigation** - Escape to scroll, Ctrl+L to focus, and more shortcuts
 - 📄 **Intelligent File Viewing** - View text files with syntax highlighting, detect binary files
 - 🚀 **Lightning Fast** - Built with Lua and Hype framework for maximum performance

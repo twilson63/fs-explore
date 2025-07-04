@@ -117,6 +117,42 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Add install directory to PATH
+add_to_path() {
+    local shell_config=""
+    local path_line="export PATH=\"\$PATH:$INSTALL_DIR\""
+    
+    # Determine which shell configuration file to use
+    if [[ "$SHELL" == *"zsh"* ]] || [[ -n "$ZSH_VERSION" ]]; then
+        shell_config="$HOME/.zshrc"
+    elif [[ "$SHELL" == *"bash"* ]] || [[ -n "$BASH_VERSION" ]]; then
+        shell_config="$HOME/.bashrc"
+        # On macOS, .bash_profile is more common
+        if [[ "$(uname -s)" == "Darwin" ]] && [[ -f "$HOME/.bash_profile" ]]; then
+            shell_config="$HOME/.bash_profile"
+        fi
+    else
+        print_warning "Unknown shell. Please manually add the following to your shell profile:"
+        echo "export PATH=\"\$PATH:$INSTALL_DIR\""
+        return
+    fi
+    
+    # Check if the path is already in the config file
+    if [[ -f "$shell_config" ]] && grep -q "$INSTALL_DIR" "$shell_config"; then
+        print_status "PATH already configured in $shell_config"
+        return
+    fi
+    
+    # Add to shell config
+    print_status "Adding $INSTALL_DIR to PATH in $shell_config"
+    echo "" >> "$shell_config"
+    echo "# Added by fs-explore installer" >> "$shell_config"
+    echo "$path_line" >> "$shell_config"
+    
+    print_success "Updated $shell_config"
+    print_status "Restart your terminal or run: source $shell_config"
+}
+
 # Main installation
 main() {
     print_status "Installing fs-explore..."
@@ -149,9 +185,8 @@ main() {
     
     # Check if install directory is in PATH
     if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
-        print_warning "Warning: $INSTALL_DIR is not in your PATH"
-        print_status "Add the following line to your shell profile (.bashrc, .zshrc, etc.):"
-        echo "export PATH=\"\$PATH:$INSTALL_DIR\""
+        print_warning "$INSTALL_DIR is not in your PATH"
+        add_to_path
     fi
     
     print_success "Installation complete!"
@@ -168,6 +203,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     echo "  - Detect your platform (OS and architecture)"
     echo "  - Download the latest fs-explore binary"
     echo "  - Install it to ~/.local/bin/"
+    echo "  - Automatically add ~/.local/bin to your PATH if needed"
     echo ""
     echo "Requirements:"
     echo "  - curl"
